@@ -1,0 +1,14 @@
+type Query {
+	class(id: ID!): Class
+	event(id: ID!): Event
+}
+
+type Event {
+	id: ID!
+	name: String!
+}
+
+type Class {
+	id: ID!
+	name: String!
+}

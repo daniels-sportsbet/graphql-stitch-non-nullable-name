@@ -1,0 +1,5 @@
+{
+  "ext": "ts,graphql,json",
+  "watch": ["src", "schema"],
+  "exec": "ts-node"
+}

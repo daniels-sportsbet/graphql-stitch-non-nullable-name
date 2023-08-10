@@ -14,14 +14,7 @@ export async function createLocalGraphQlSchema() {
 	const localSchema = makeExecutableSchema({
 		typeDefs: `
 			type Query {
-				test(id: ID!, name: String!): Test!
 				entityItem(id: ID!, name: String!): Entity
-			}
- 
-			type Test {
-				id: ID!
-				name: String!
-				entity: Entity
 			}
 
 			union Entity = Class | Event
@@ -36,12 +29,6 @@ export async function createLocalGraphQlSchema() {
 		`,
 		resolvers: {
 			Query: {
-				test: (_root, {id, name}: {id: string, name: string}) => {
-					return {
-						id,
-						name
-					}
-				},
 				entityItem: (_root, {id, name}: {id: string, name: string}) => {
 					return {
 						id,
@@ -56,14 +43,6 @@ export async function createLocalGraphQlSchema() {
 					}
 
 					return __typename
-				}
-			},
-			Test: {
-				entity({ id, name }) {
-					return {
-						id,
-						__typename: name === "Class Name" ? "Class" : "Event"
-					}
 				}
 			}
 		}

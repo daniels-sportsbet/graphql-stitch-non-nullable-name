@@ -4,10 +4,6 @@ import { ApolloServer } from "@apollo/server"
 import { startStandaloneServer } from "@apollo/server/standalone"
 import { makeExecutableSchema } from "@graphql-tools/schema"
 
-const classes = [
-	{ id: "1", name: "Class 1" },
-	{ id: "2", name: "Class 2" },
-];
 const events = [
 	{ id: "3", name: "Event 3" },
 	{ id: "4", name: "Event 4" },
@@ -21,7 +17,6 @@ const events = [
 				typeDefs: externalServerSchema,
 				resolvers: {
 				  Query: {
-					class: (_root, { id }) => classes.find(c => c.id === id) || null,
 					event: (_root, { id }) => events.find(e => e.id === id) || null
 				  }
 				}

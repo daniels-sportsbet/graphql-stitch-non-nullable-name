@@ -14,13 +14,7 @@ export async function createLocalGraphQlSchema() {
 	const localSchema = makeExecutableSchema({
 		typeDefs: `
 			type Query {
-				entityItem(id: ID!, name: String!): Entity
-			}
-
-			union Entity = Class | Event
-
-			type Class {
-				id: ID!
+				entityItem(id: ID!): Event
 			}
 
 			type Event {
@@ -29,20 +23,11 @@ export async function createLocalGraphQlSchema() {
 		`,
 		resolvers: {
 			Query: {
-				entityItem: (_root, {id, name}: {id: string, name: string}) => {
+				entityItem: (_root, {id}: {id: string}) => {
 					return {
 						id,
-						__typename: name === "Class Name" ? "Class" : "Event"
+						__typename: "Event"
 					}
-				}
-			},
-			Entity: {
-				__resolveType({ __typename}: {__typename: "Class" | "Event"}) {
-					if (!__typename) {
-						throw new Error("No typename")
-					}
-
-					return __typename
 				}
 			}
 		}
@@ -54,11 +39,6 @@ export async function createLocalGraphQlSchema() {
 			endpoint: "http://127.0.0.1:4001"
 		}),
 		merge: {
-			Class: {
-				fieldName: "class",
-				selectionSet: "{ id }",
-				args: ({ id }) => ({ id })
-			},
 			Event: {
 				fieldName: "event",
 				selectionSet: "{ id }",
